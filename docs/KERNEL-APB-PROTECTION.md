@@ -186,3 +186,22 @@ The platform-driver directory again showed dw-apb-uart, alongside unrelated entr
 This adds runtime evidence that no obvious APB-protection module was loaded and no obvious APB-protection driver name was registered in the inspected driver directory at that time. /proc/modules lists loadable modules currently loaded; it does not list drivers built into the kernel. The inspection also does not establish whether an APB-protection module file exists on disk, whether another component configures the hardware, or whether hardware protection is active. The module-directory portion of the command output was not included in the captured excerpt, so no conclusion is drawn about module files on disk.
 
 No modules were loaded or unloaded, and no device settings or registers were modified.
+
+
+## On-disk module filename search (Experiment 183)
+
+A read-only search for filenames matching APB/protection-related patterns was run with a maximum depth of three in the following locations:
+
+- `/vendor_dlkm/lib/modules`
+- `/vendor/lib/modules`
+- `/system/lib/modules`
+- `/odm/lib/modules`
+- `/lib/modules`
+
+The first two directories existed but returned no matching filenames. The latter three directories were reported as not present. No matching APB-protection module file was found in the searched locations.
+
+### Interpretation and limits
+
+This result is consistent with the absence of an obvious separately installed APB-protection module in the checked locations. It is not a complete filesystem or partition inventory, does not search outside those paths, and does not rule out a built-in driver, a differently named module, or configuration by boot firmware or another component. Combined with the lack of an observed platform-driver binding and the lack of an obvious loaded module name, the evidence strengthens—but does not prove—the hypothesis that the inspected production system is not running the source-tree APB protection driver. Hardware protection state remains undetermined.
+
+No files or device settings were modified.
