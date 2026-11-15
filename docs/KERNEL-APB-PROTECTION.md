@@ -1,0 +1,136 @@
+# UMS9620 kernel source: APB protection
+
+## Source context
+
+The kernel source examined was Motorola Mobility's public repository:
+
+- Repository: [MotorolaMobilityLLC/kernel-sprd](https://github.com/MotorolaMobilityLLC/kernel-sprd)
+- Branch: `andriod-15-release-vuoa35` (upstream branch spelling)
+- Examined commit prefix: `eefd920cfb04`
+- Device build examined: `VUOA35.116-151`
+- Device product: `manila`
+
+The build recipes and device-tree references connect the UMS9620 source configuration with the Manila device family. This is a source/build-recipe connection; it does not prove that the tested phone's installed kernel was built from this exact commit and configuration.
+
+## Device-tree nodes
+
+File:
+
+`arch/arm64/boot/dts/sprd/ums9620/apb_prot.dtsi`
+
+The file defines two nodes using compatible string `sprd,apb-prot`:
+
+- AON APB protection node, using `aon_apb_regs`, interrupt 254.
+- PMU APB protection node, using `pmu_apb_regs`, interrupt 255.
+
+Both nodes configure:
+
+- `sprd,lock_magic = <0x6896>`
+- `sprd,lock_but_write_int`
+- `sprd,record_last`
+
+The following properties are commented out in the inspected nodes:
+
+- `sprd,panic`
+- `sprd,glb_lock`
+- `sprd,lock_id`
+
+The absence of those properties in these nodes means the driver does not receive those options from these particular device-tree entries. It does not establish the state of unrelated hardware protection mechanisms.
+
+## Driver behavior
+
+Driver:
+
+`drivers/unisoc_platform/debug/apb_prot/sprd_apb_prot.c`
+
+The driver matches device-tree nodes with:
+
+```c
+{ .compatible = "sprd,apb-prot", }
+```
+
+The probe path obtains the APB syscon regmap, reads configuration properties, requests a threaded interrupt, and calls the hardware-setup routine. The driver is registered using a post-core initcall.
+
+The inspected interrupt handler:
+
+1. Reads the command/status register at offset `0xff0`.
+2. Reads the debug snapshot interface at offset `0xffc`.
+3. Logs the illegal master and address-offset fields.
+4. Clears interrupt status using offset `0xff8`.
+5. Calls `BUG()` only when the driver's panic option is enabled.
+
+Because `sprd,panic` is commented out in the inspected AON and PMU nodes, those nodes do not request the driver's panic option through that property.
+
+The driver also provides an exported helper, `sprd_apb_prot_write()`, which attempts to acquire/release a direct-access lock around a register write when the global-lock status bit is set. This is an internal kernel helper, not a user-space interface.
+
+## Kconfig and Makefile
+
+The APB protection Kconfig entry is:
+
+```makefile
+config SPRD_APB_PROT
+        tristate "Spreadtrum APB PROT Support"
+        depends on SPRD_DEBUG
+```
+
+The Makefile builds the driver according to `CONFIG_SPRD_APB_PROT`:
+
+```makefile
+obj-$(CONFIG_SPRD_APB_PROT) += sprd_apb_prot.o
+```
+
+The parent debug Kconfig defines `SPRD_DEBUG` as a boolean option dependent on `ARCH_SPRD || COMPILE_TEST`.
+
+## Build-fragment comparison
+
+The inspected production fragment:
+
+`arch/arm64/configs/sprd_gki_qogirn6pro.fragment`
+
+contains:
+
+```text
+# CONFIG_SPRD_DEBUG is not set
+# CONFIG_SPRD_DEBUG_GIC is not set
+```
+
+The inspected debug fragment:
+
+`arch/arm64/configs/sprd_gki_qogirn6pro_debug.fragment`
+
+contains:
+
+```text
+CONFIG_SPRD_APB_PROT=m
+CONFIG_SPRD_DEBUG=y
+```
+
+The production build recipe referenced the production fragment, while the debug recipe included the debug fragment as an additional configuration input. Both recipes referenced the Manila overlay device-tree artifact:
+
+`arch/arm64/boot/dts/sprd/ums9620-2h10_manila-overlay.dtbo`
+
+### Configuration conclusion and limitation
+
+The production fragment explicitly disables `SPRD_DEBUG`. Since `SPRD_APB_PROT` depends on `SPRD_DEBUG`, this is strong evidence that the production recipe is not enabling the APB protection driver through that fragment.
+
+However, the fragment alone is not the final merged kernel `.config`. The exact final configuration depends on all inputs and build steps. The available evidence does not include the final merged `.config` from the exact firmware installed on the tested phone.
+
+Therefore, this repository does **not** claim that APB protection is definitely absent or active at runtime on the tested device.
+
+## Evidence summary
+
+**Source-confirmed**
+- UMS9620 APB device-tree source defines AON and PMU protection nodes.
+- Both nodes request write-violation interrupt reporting and last-event recording.
+- The driver contains a matching compatible string and a probe/interrupt-handling path.
+- APB protection depends on `SPRD_DEBUG`.
+- The inspected production fragment disables `SPRD_DEBUG`; the debug fragment enables it and sets APB protection to module mode.
+- The build recipes reference a Manila overlay artifact.
+
+**Not established**
+- Whether the exact production firmware's final merged kernel configuration includes the driver.
+- Whether either APB node successfully binds to the driver on the tested phone.
+- Whether the hardware registers were successfully programmed at runtime.
+- Whether APB protection controls FRP, OEM unlocking, or bootloader authorization.
+
+APB protection is a peripheral-bus access-control mechanism in the inspected source. No evidence collected here establishes a direct relationship between this driver and FRP or bootloader unlock policy.
