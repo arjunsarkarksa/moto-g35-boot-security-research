@@ -63,3 +63,8 @@ These links are pinned to the AOSP `android15-release` branch:
 - [OEM-lock AIDL interface](https://android.googlesource.com/platform/hardware/interfaces/+/master/oemlock/aidl/android/hardware/oemlock/IOemLock.aidl) — vendor HAL method contract.
 
 The inspected Android 15 `OemLockService.java` Gitiles blob is `d00268899a07c12b17e50abca294bcf7861b7b1d`. The AIDL interface link is the published hardware-interface source; it is not claimed to be a Motorola vendor implementation.
+
+
+## Vendor OEM-lock source availability search
+
+A targeted GitHub code search was run for `vendor.sprd.hardware.oemlock-service`, `oemlock_ca.so`, and `IOemLock` within the examined Motorola kernel repository. No matching vendor implementation source was returned. Global searches surfaced third-party Unisoc firmware manifests listing the service and library as proprietary files; these are not Motorola source code and do not disclose implementation details. See [Vendor OEM-lock source availability](VENDOR-OEMLOCK-SOURCE-AVAILABILITY.md) for scope and limitations.
