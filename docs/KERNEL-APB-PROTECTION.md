@@ -134,3 +134,30 @@ Therefore, this repository does **not** claim that APB protection is definitely 
 - Whether APB protection controls FRP, OEM unlocking, or bootloader authorization.
 
 APB protection is a peripheral-bus access-control mechanism in the inspected source. No evidence collected here establishes a direct relationship between this driver and FRP or bootloader unlock policy.
+
+
+## Live-device runtime observations (Experiment 179–180)
+
+On 15 November 2026, read-only ADB inspection of the tested Moto G35 exposed these live device-tree nodes:
+
+- `/sys/firmware/devicetree/base/soc/aon/aon-apb-prot`
+- `/sys/firmware/devicetree/base/soc/aon/pmu-apb-prot`
+
+The corresponding platform devices were also listed under `/sys/bus/platform/devices` with these registered names:
+
+- `soc:aon:aon-apb-prot`
+- `soc:aon:pmu-apb-prot`
+
+Both device paths resolved to sysfs device entries. For each entry, checking its `driver` child returned `No such file or directory`; therefore, no driver symlink was observed for either platform device at the time of inspection. The `uevent` files could not be read by the ADB shell because access was denied.
+
+The platform-driver directory listing contained names such as `dw-apb-uart`, but no obvious `sprd-apb-prot` entry. `dw-apb-uart` is an APB UART driver and must not be confused with the APB protection driver.
+
+### Runtime interpretation
+
+**Observed:** Both APB protection nodes exist in the live device tree, and both corresponding platform devices are registered.
+
+**Observed:** Neither platform device exposed a `driver` symlink during this inspection. This is evidence that neither device was bound to a platform driver at that time.
+
+**Not established:** Whether the protection hardware has been initialized or configured by another component, firmware, boot stage, or differently named driver; whether a driver can bind later; or whether the absence of a sysfs driver link reflects all relevant protection state.
+
+The runtime result is consistent with the extracted kernel configuration not containing the named `CONFIG_SPRD_APB_PROT` and `CONFIG_SPRD_DEBUG` options, but it does not by itself prove the complete hardware protection state. No device settings, registers, or files were modified.
