@@ -61,6 +61,7 @@ See [Kernel and APB protection analysis](docs/KERNEL-APB-PROTECTION.md).
 
 - `docs/DEVICE-BASELINE.md` — observed device properties and interpretation.
 - `docs/OEM-LOCK-ARCHITECTURE.md` — Android framework, vendor HAL, permissions and SELinux observations.
+- `docs/OEM-LOCK-READ-PATHS.md` — Android 15 read-path analysis and state-changing API boundary.
 - `docs/KERNEL-APB-PROTECTION.md` — UMS9620 device-tree, driver and build-fragment analysis.
 - `docs/METHOD.md` — evidence labels, methodology and limitations.
 - `docs/SOURCE-REFERENCES.md` — pinned kernel-source links and evidence mapping.
