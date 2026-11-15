@@ -12,11 +12,15 @@ This repository documents read-only technical research into the boot-security ar
 - Analyze relevant UMS9620 device-tree and APB protection source.
 - Separate directly observed facts from source-level indications and unanswered questions.
 
+## Project commitment
+
+The Moto G35 used in this research is now designated as a dedicated lab device, not for personal use. Our public purpose is to share careful, reproducible defensive research so others can learn from it. If even one reader gains useful understanding or avoids a security mistake, that is a meaningful success: **one smile at a time**.
+
 ## Scope and safety
 
 This is a **read-only research and documentation project**. It does not provide instructions to bypass FRP, defeat bootloader security, exploit privileged services, modify protected partitions, or circumvent SELinux. No unlocking, flashing, or persistent-data modification is part of the documented experiments.
 
-Only test devices that you own or are explicitly authorized to examine. Redact serial numbers, IMEIs, account identifiers, tokens, and other personal data before publishing logs.
+Only test devices that you own or are explicitly authorized to examine. Never publish real IMEIs, serial numbers, account identifiers, passwords, tokens, private keys, or other secrets. Use clearly labelled redaction placeholders, not fabricated values. See [Public research, private identifiers](docs/PUBLICATION-PRIVACY-RULES.md) for the project's publication rules.
 
 ## Device baseline
 
@@ -64,6 +68,7 @@ See [Kernel and APB protection analysis](docs/KERNEL-APB-PROTECTION.md).
 - `docs/OEM-LOCK-READ-PATHS.md` — Android 15 read-path analysis and state-changing API boundary.
 - `docs/VENDOR-OEMLOCK-SOURCE-AVAILABILITY.md` — targeted public-source search and unresolved vendor implementation boundary.
 - `docs/KERNEL-APB-PROTECTION.md` — UMS9620 device-tree, driver and build-fragment analysis.
+- `docs/PUBLICATION-PRIVACY-RULES.md` — public/private data boundary, redaction and publication checklist.
 - `docs/METHOD.md` — evidence labels, methodology and limitations.
 - `docs/SOURCE-REFERENCES.md` — pinned kernel-source links and evidence mapping.
 - `docs/RESEARCH-STATUS.md` — consolidated findings and unresolved questions.
