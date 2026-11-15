@@ -64,3 +64,18 @@ This status describes the evidence collected so far; it does not claim complete 
 
 
 - **Final kernel-provenance pass (15 November 2026):** A focused search of Motorola public materials found no official manifest or release note mapping lab firmware `VUOA35.116-151/a43dc2` to a kernel source commit. Motorola's published Moto G35 source/build note remains `MMI-VUOA35.116-100`. A third-party firmware index reports an XT2433-1 archive filename containing `VUOA35.116_151_a43dc2`, but this is secondary evidence for a different regional SKU and is not an authenticated Motorola manifest. The researcher's recursive inventory of `C:\A\LAB` found no firmware package, `boot.img`, `payload.bin`, or manifest. Exact source-to-installed-binary correspondence remains unverified; this provenance search is closed unless new primary evidence appears. See [Firmware and kernel source provenance](FIRMWARE-KERNEL-PROVENANCE.md).
+
+## Phase closure — 15 November 2026
+
+**Status: Moto G35 read-only boot-security research phase closed with documented limitations.**
+
+The planned read-only evidence collection and documentation for the current phase are complete. The APB assessment and kernel-provenance investigation have been recorded in the repository. Remaining questions are explicitly classified as undetermined rather than treated as failures or filled with assumptions:
+
+- The proprietary OEM-lock HAL's internal decision logic is not available from the collected public/runtime evidence.
+- APB hardware protection state and any initialization by inaccessible firmware or differently named components remain undetermined.
+- No relationship between APB protection and FRP/OEM-unlock policy has been established.
+- Exact source-to-installed-kernel correspondence for VUOA35.116-151 remains unverified.
+
+No further device-side probing is justified for this phase without a specific new, safe evidence source. No unlocking, flashing, partition writes, FRP bypass, exploits, privileged Binder calls, or hardware register writes were performed.
+
+The phase is closed as an evidence-based research result, not as a claim that every proprietary implementation detail has been reverse engineered. Reopen only for genuinely new primary evidence. The next separate workstream is the DPC Security Lab.
