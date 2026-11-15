@@ -67,6 +67,7 @@ See [Kernel and APB protection analysis](docs/KERNEL-APB-PROTECTION.md).
 - `docs/OEM-LOCK-ARCHITECTURE.md` — Android framework, vendor HAL, permissions and SELinux observations.
 - `docs/OEM-LOCK-READ-PATHS.md` — Android 15 read-path analysis and state-changing API boundary.
 - `docs/VENDOR-OEMLOCK-SOURCE-AVAILABILITY.md` — targeted public-source search and unresolved vendor implementation boundary.
+- `docs/FIRMWARE-KERNEL-PROVENANCE.md` — comparison of the lab firmware build with Motorola's published Moto G35 kernel source release.
 - `docs/KERNEL-APB-PROTECTION.md` — UMS9620 device-tree, driver and build-fragment analysis.
 - `docs/PUBLICATION-PRIVACY-RULES.md` — public/private data boundary, redaction and publication checklist.
 - `docs/METHOD.md` — evidence labels, methodology and limitations.
@@ -79,7 +80,7 @@ See [Kernel and APB protection analysis](docs/KERNEL-APB-PROTECTION.md).
 - [Android Open Source Project](https://source.android.com/)
 - [Android Verified Boot](https://source.android.com/docs/security/features/verifiedboot)
 
-The Motorola kernel source examined for this work was the Android 15 branch `andriod-15-release-vuoa35` (branch spelling as published by the upstream repository), at a commit beginning `eefd920cfb04`.
+The Motorola kernel source examined for APB analysis was the Android 15 branch `andriod-15-release-vuoa35` (branch spelling as published by the upstream repository), at a commit beginning `eefd920cfb04`. Motorola separately published a Moto G35 kernel release branch `MMI-VUOA35.116-100`; its exact correspondence to the lab device's observed `VUOA35.116-151` firmware is not established. See [Firmware and kernel source provenance](docs/FIRMWARE-KERNEL-PROVENANCE.md).
 
 ## Evidence standard
 
