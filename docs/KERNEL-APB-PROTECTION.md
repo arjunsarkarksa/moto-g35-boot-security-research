@@ -216,3 +216,48 @@ A read-only inspection of `/sys/module` showed numerous Spreadtrum/Unisoc module
 This is an additional registry check consistent with Experiments 180–183: no obvious APB-protection driver or module entry was visible in the inspected sysfs registries at the time. The `/sys/module` listing is not a complete inventory of all built-in kernel code, and name-based searches cannot exclude differently named components or firmware/boot-stage configuration. The result does not establish whether APB hardware protection is active or inactive.
 
 No modules were loaded or unloaded, and no device settings or registers were modified.
+
+
+## Running-kernel configuration inspection (Experiment 187)
+
+The handset's exposed `/proc/config.gz` was collected read-only, decompressed locally, and inspected. The extracted configuration contains:
+
+```text
+# CONFIG_ARCH_SPRD is not set
+CONFIG_MODULES=y
+CONFIG_SECURITY_SELINUX=y
+```
+
+No `CONFIG_SPRD_APB_PROT` or `CONFIG_SPRD_DEBUG` entry was found. The absence of these named options in the extracted running configuration is consistent with the lack of an observed APB-protection driver binding and obvious module/registry entries in Experiments 180–184.
+
+This is configuration evidence, not proof that APB hardware protection is inactive. It does not exclude differently named code, firmware/boot-stage initialization, inaccessible state, or another protection mechanism. The configuration's `CONFIG_ARCH_SPRD` result is recorded as observed; no broader platform conclusion is inferred from it.
+
+The compressed and decompressed configuration artifacts are retained in the local lab evidence directory as `moto-g35-kernel.config.gz` and `moto-g35-kernel.config`.
+
+
+## Evidence integrity baseline (Experiment 189)
+
+SHA-256 hashes were generated for the two kernel-configuration artifacts and the earlier APB/configuration experiment records. The hashes and byte lengths are recorded in the local experiment record `experiment-189-sha256-integrity.md`. This establishes a local integrity baseline for those captured artifacts; it does not independently authenticate their origin or prove firmware/source correspondence.
+
+
+## Consolidated APB protection assessment (Experiment 190)
+
+The consolidated assessment is retained locally at:
+
+`reports/APB-PROTECTION-ASSESSMENT.md`
+
+### Findings
+
+- The live device tree exposes AON and PMU APB protection nodes, and matching platform devices are registered and associated with those nodes.
+- No driver symlink was observed for either platform device during inspection.
+- No obvious APB-protection driver/module name was found in the inspected platform-driver registry, `/proc/modules`, `/sys/module`, or the searched module directories.
+- The inspected running kernel configuration contains neither `CONFIG_SPRD_APB_PROT` nor `CONFIG_SPRD_DEBUG`; it reports `# CONFIG_ARCH_SPRD is not set`.
+- Public Motorola source contains the corresponding APB device-tree definitions, driver, Kconfig/Makefile entries, and build-fragment references. The exact source-to-installed-kernel-binary correspondence has not been established.
+
+### Assessment and limits
+
+Taken together, the observations support the conclusion that the named source-tree APB protection driver was not observed as bound, loaded under an obvious name, or enabled through the named options in the inspected running configuration. They do **not** establish that APB hardware protection is inactive. Alternative implementations, differently named components, firmware or boot-stage configuration, and inaccessible interfaces remain possible.
+
+Some sysfs and device-tree properties were inaccessible. Name-based searches are incomplete by nature. No APB hardware register writes or protection-state changes were attempted. No relationship between APB protection and FRP or OEM bootloader unlocking has been established.
+
+All handset observations remained read-only. No unlocking, bypass, exploitation, flashing, partition modification, or privileged interface invocation was performed.
