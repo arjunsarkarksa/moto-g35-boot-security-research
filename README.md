@@ -85,4 +85,4 @@ An empty command result, denied shell access, or unimplemented Fastboot command 
 
 ## Status
 
-Initial research notes are being consolidated. This repository is a technical record, not a claim that every aspect of Motorola's proprietary bootloader implementation has been reverse-engineered.
+The initial read-only research phase is documented. See [Research status and unresolved questions](docs/RESEARCH-STATUS.md) for the consolidated findings and remaining unknowns. This repository is a technical record, not a claim that every aspect of Motorola's proprietary bootloader implementation has been reverse-engineered.
