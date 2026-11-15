@@ -44,3 +44,6 @@ Do not treat an unsupported command, empty output, access denial, source-code fe
 - Examined commit prefix: `eefd920cfb04`
 
 This status describes the evidence collected so far; it does not claim complete reverse engineering of Motorola's proprietary bootloader.
+
+
+- **Observed loaded-module/driver listing (Experiment 182):** The inspected /proc/modules output contained numerous Spreadtrum/Unisoc modules but no obvious sprd_apb_prot module name. The platform-driver listing showed dw-apb-uart but no obvious APB-protection driver name. This does not rule out a built-in driver, an on-disk but unloaded module, or hardware configuration by another component. The captured output did not include the module-directory listing, so on-disk module availability remains unassessed. See [UMS9620 APB protection](KERNEL-APB-PROTECTION.md).
