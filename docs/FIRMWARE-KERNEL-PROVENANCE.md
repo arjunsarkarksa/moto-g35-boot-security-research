@@ -114,3 +114,21 @@ The running configuration is direct evidence of the options recorded in the hand
 This does **not** prove that no APB protection exists in hardware, firmware, bootloader, another driver, or a differently named kernel component. The absent `CONFIG_ARCH_SPRD` symbol also cautions against assuming that source-tree Kconfig names map one-to-one to the running kernel's configuration. The source tree and exact build revision still require correlation.
 
 The extracted configuration file is retained locally for research. It contains technical build settings, not a unique device identifier. Public documentation records only the selected relevant entries above.
+
+
+## Final public-source and firmware-metadata check (15 November 2026)
+
+A focused search of Motorola's public GitHub materials and indexed Motorola support pages was performed for the exact lab build `VUOA35.116-151`, incremental identifier `a43dc2`, and kernel identifiers `g2d8ad9139b89` / `ab15063902`. The search surfaced the already documented Motorola source release `MMI-VUOA35.116-100` and its build note, but no Motorola-published manifest or release note explicitly mapping `VUOA35.116-151` to a kernel source commit.
+
+A third-party firmware index reports a package named `RETBR_XT2433-1_manila_g_user_15_VUOA35.116_151_a43dc2_release_keys_CFC.zip` for an XT2433-1 regional variant. The build and incremental suffix match the lab handset's reported software identifiers, but the listing is secondary evidence, refers to a different regional SKU, and is not an authenticated Motorola manifest. It does not establish the package contents, exact kernel binary, or source revision. No package was downloaded or flashed as part of this investigation.
+
+The local recursive inventory supplied by the researcher found only the extracted kernel configuration and its experiment notes matching firmware/kernel-related filename patterns under `C:\A\LAB`; no firmware package, `boot.img`, `payload.bin`, or manifest was present in that lab workspace at the time of the check.
+
+### Final provenance assessment
+
+- **Confirmed by Motorola publication:** Moto G35 kernel source/build instructions exist for `MMI-VUOA35.116-100`.
+- **Observed on the lab handset:** firmware `VUOA35.116-151`, incremental ID `a43dc2`, and kernel release `5.15.197-android13-8-00005-g2d8ad9139b89-ab15063902`.
+- **Secondary corroboration only:** a third-party index reports an XT2433-1 firmware archive whose filename includes `VUOA35.116_151_a43dc2`.
+- **Not established:** an official Motorola source-to-firmware mapping, the exact kernel source commit, or identity between the third-party package and the lab handset's installed image.
+
+The provenance search is now closed at the current evidence boundary. Do not keep repeating broad searches for the same identifiers unless new primary evidence appears (for example, a Motorola-published manifest, an authenticated firmware package with verifiable metadata, or an exact source commit mapping).
