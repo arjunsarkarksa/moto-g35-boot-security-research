@@ -21,6 +21,8 @@ The repository contains the device baseline, OEM-lock framework/HAL analysis, UM
 
 - **Observed live APB device-tree/platform state:** The handset exposes AON and PMU APB protection nodes, and corresponding platform devices `soc:aon:aon-apb-prot` and `soc:aon:pmu-apb-prot` are registered. Neither device exposed a `driver` symlink during read-only inspection, so no platform-driver binding was observed at that time. This does not prove the protection hardware is inactive or exclude initialization by another component. See [UMS9620 APB protection](KERNEL-APB-PROTECTION.md).
 
+- **Observed APB device-tree association:** Each registered APB platform device's `of_node` symlink resolves to its corresponding live AON or PMU APB protection node. Reading `modalias` was denied, so the alias value remains unknown. No driver binding was observed for either device. See [UMS9620 APB protection](KERNEL-APB-PROTECTION.md).
+
 ## Important unresolved questions
 
 1. Motorola's proprietary OEM-lock HAL decision logic and its response for this handset.
