@@ -50,3 +50,6 @@ This status describes the evidence collected so far; it does not claim complete 
 
 
 - **Observed module-file search (Experiment 183):** A read-only filename search found no APB/protection-pattern matches in the existing `/vendor_dlkm/lib/modules` or `/vendor/lib/modules` directories; `/system/lib/modules`, `/odm/lib/modules`, and `/lib/modules` were not present. This limited search does not rule out built-in or differently named drivers, other module locations, or firmware configuration. Combined with Experiments 180–182, it strengthens but does not prove the hypothesis that the inspected production system is not running the source-tree APB protection driver. Hardware protection state remains undetermined. See [UMS9620 APB protection](KERNEL-APB-PROTECTION.md).
+
+
+- **Observed sysfs registry inspection (Experiment 184):** `/sys/module` contained numerous Spreadtrum/Unisoc entries but no obvious APB-protection module entry; the platform-driver registry showed `dw-apb-uart` and `scpi_protocol`, but no obvious APB-protection driver name. This is a name-based registry observation, not proof that no built-in or differently named component exists. Hardware protection state remains undetermined. See [UMS9620 APB protection](KERNEL-APB-PROTECTION.md).
