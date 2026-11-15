@@ -161,3 +161,15 @@ The platform-driver directory listing contained names such as `dw-apb-uart`, but
 **Not established:** Whether the protection hardware has been initialized or configured by another component, firmware, boot stage, or differently named driver; whether a driver can bind later; or whether the absence of a sysfs driver link reflects all relevant protection state.
 
 The runtime result is consistent with the extracted kernel configuration not containing the named `CONFIG_SPRD_APB_PROT` and `CONFIG_SPRD_DEBUG` options, but it does not by itself prove the complete hardware protection state. No device settings, registers, or files were modified.
+
+
+## Device-to-device-tree association (Experiment 181)
+
+Read-only ADB inspection of the two registered platform devices showed:
+
+- `soc:aon:aon-apb-prot/of_node` resolves to `/sys/firmware/devicetree/base/soc/aon/aon-apb-prot`.
+- `soc:aon:pmu-apb-prot/of_node` resolves to `/sys/firmware/devicetree/base/soc/aon/pmu-apb-prot`.
+
+This confirms that each registered platform device is associated with its corresponding live device-tree node. Attempts to read each device's `modalias` returned `Permission denied`, so the alias value was not obtained.
+
+Combined with the earlier observation that neither device exposed a `driver` symlink, the current evidence is: both platform devices are registered and associated with their device-tree nodes, but no bound driver was observed at the time of inspection. The denied `modalias` read does not establish whether a matching driver exists elsewhere or whether another component configures the hardware.
