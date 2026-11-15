@@ -173,3 +173,16 @@ Read-only ADB inspection of the two registered platform devices showed:
 This confirms that each registered platform device is associated with its corresponding live device-tree node. Attempts to read each device's `modalias` returned `Permission denied`, so the alias value was not obtained.
 
 Combined with the earlier observation that neither device exposed a `driver` symlink, the current evidence is: both platform devices are registered and associated with their device-tree nodes, but no bound driver was observed at the time of inspection. The denied `modalias` read does not establish whether a matching driver exists elsewhere or whether another component configures the hardware.
+
+
+## Loaded-module and driver-name inspection (Experiment 182)
+
+A read-only inspection of the handset's loaded-module list (/proc/modules), filtered for APB/Spreadtrum-related names, showed numerous loaded Unisoc/Spreadtrum modules, including modem, PMIC, GPIO, clock, storage, and platform components. No loaded module named sprd_apb_prot or other obvious APB-protection module name appeared in the returned output.
+
+The platform-driver directory again showed dw-apb-uart, alongside unrelated entries, but no obvious sprd-apb-prot driver entry. dw-apb-uart is an APB UART controller driver, not evidence of the APB protection driver.
+
+### Interpretation and limits
+
+This adds runtime evidence that no obvious APB-protection module was loaded and no obvious APB-protection driver name was registered in the inspected driver directory at that time. /proc/modules lists loadable modules currently loaded; it does not list drivers built into the kernel. The inspection also does not establish whether an APB-protection module file exists on disk, whether another component configures the hardware, or whether hardware protection is active. The module-directory portion of the command output was not included in the captured excerpt, so no conclusion is drawn about module files on disk.
+
+No modules were loaded or unloaded, and no device settings or registers were modified.
