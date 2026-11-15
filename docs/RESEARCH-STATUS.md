@@ -19,6 +19,8 @@ The repository contains the device baseline, OEM-lock framework/HAL analysis, UM
 - **Unverified correlation:** The kernel release contains `g2d8ad9139b89`, a potential source-commit correlation key. Its mapping to Motorola's published source has not been established.
 - **Source-provenance status:** Motorola's published `MMI-VUOA35.116-100` source is in the same broad `VUOA35.116` family as lab firmware `VUOA35.116-151`; exact source-to-binary correspondence remains unknown. See [Firmware and kernel source provenance](FIRMWARE-KERNEL-PROVENANCE.md).
 
+- **Observed live APB device-tree/platform state:** The handset exposes AON and PMU APB protection nodes, and corresponding platform devices `soc:aon:aon-apb-prot` and `soc:aon:pmu-apb-prot` are registered. Neither device exposed a `driver` symlink during read-only inspection, so no platform-driver binding was observed at that time. This does not prove the protection hardware is inactive or exclude initialization by another component. See [UMS9620 APB protection](KERNEL-APB-PROTECTION.md).
+
 ## Important unresolved questions
 
 1. Motorola's proprietary OEM-lock HAL decision logic and its response for this handset.
