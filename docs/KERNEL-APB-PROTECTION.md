@@ -205,3 +205,14 @@ The first two directories existed but returned no matching filenames. The latter
 This result is consistent with the absence of an obvious separately installed APB-protection module in the checked locations. It is not a complete filesystem or partition inventory, does not search outside those paths, and does not rule out a built-in driver, a differently named module, or configuration by boot firmware or another component. Combined with the lack of an observed platform-driver binding and the lack of an obvious loaded module name, the evidence strengthens—but does not prove—the hypothesis that the inspected production system is not running the source-tree APB protection driver. Hardware protection state remains undetermined.
 
 No files or device settings were modified.
+
+
+## Sysfs module and platform-driver registry inspection (Experiment 184)
+
+A read-only inspection of `/sys/module` showed numerous Spreadtrum/Unisoc module entries, but no obvious APB-protection-related entry such as `sprd_apb_prot`. The platform-driver registry again showed `dw-apb-uart` and `scpi_protocol`, with no obvious APB-protection driver name.
+
+### Interpretation and limits
+
+This is an additional registry check consistent with Experiments 180–183: no obvious APB-protection driver or module entry was visible in the inspected sysfs registries at the time. The `/sys/module` listing is not a complete inventory of all built-in kernel code, and name-based searches cannot exclude differently named components or firmware/boot-stage configuration. The result does not establish whether APB hardware protection is active or inactive.
+
+No modules were loaded or unloaded, and no device settings or registers were modified.
