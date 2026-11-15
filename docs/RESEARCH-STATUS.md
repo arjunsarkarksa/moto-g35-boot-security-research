@@ -21,6 +21,7 @@ The repository contains the device baseline, OEM-lock framework/HAL analysis, UM
 2. The exact final merged kernel configuration used by the installed firmware.
 3. Whether the APB protection driver binds and programs the hardware at runtime.
 4. Whether APB protection has any relationship to FRP or OEM-unlock policy. No such relationship has been established.
+5. Whether Motorola's published `MMI-VUOA35.116-100` kernel source is the exact source revision used for the lab device's observed `VUOA35.116-151` firmware. The shared release-family prefix is not proof of an exact match; see [Firmware and kernel source provenance](FIRMWARE-KERNEL-PROVENANCE.md).
 
 ## Scope boundary
 
