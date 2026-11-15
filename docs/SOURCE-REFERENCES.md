@@ -68,3 +68,12 @@ The inspected Android 15 `OemLockService.java` Gitiles blob is `d00268899a07c12b
 ## Vendor OEM-lock source availability search
 
 A targeted GitHub code search was run for `vendor.sprd.hardware.oemlock-service`, `oemlock_ca.so`, and `IOemLock` within the examined Motorola kernel repository. No matching vendor implementation source was returned. Global searches surfaced third-party Unisoc firmware manifests listing the service and library as proprietary files; these are not Motorola source code and do not disclose implementation details. See [Vendor OEM-lock source availability](VENDOR-OEMLOCK-SOURCE-AVAILABILITY.md) for scope and limitations.
+
+
+## Moto G35 kernel release provenance
+
+- [Motorola Moto G35 build note for MMI-VUOA35.116-100](https://github.com/MotorolaMobilityLLC/readme/blob/master/MMI-VUOA35.116-100.txt) — Motorola's published kernel build instructions and source branch reference.
+- [Motorola kernel source request and release confirmation, issue #13](https://github.com/MotorolaMobilityLLC/kernel-sprd/issues/13) — Motorola confirmed publication of the Moto G35 kernel source at `MMI-VUOA35.116-100` on 24 April 2026.
+- [Published kernel source branch](https://github.com/MotorolaMobilityLLC/kernel-sprd/tree/MMI-VUOA35.116-100).
+
+The lab handset reports firmware build `VUOA35.116-151`. The exact source-to-binary correspondence between that build and the published `MMI-VUOA35.116-100` branch remains **Unknown**. See [Firmware and kernel source provenance](FIRMWARE-KERNEL-PROVENANCE.md).
