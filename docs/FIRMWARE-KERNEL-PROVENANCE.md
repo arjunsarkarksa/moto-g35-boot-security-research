@@ -53,6 +53,10 @@ The handset returned:
 
 A GitHub code search of the Motorola kernel repository for `g2d8ad9139b89`, `ab15063902`, and the full kernel release string returned no indexed matches. This negative search result is inconclusive: it does not prove the commit or build metadata is absent from the source history or build artifacts.
 
+A follow-up public cross-reference search also found the exact same full kernel release string in unrelated device records: a Lenovo Idea Tab (TB336FU) device listing and a public issue reporting a vivo Y03t. These are secondary, user-/database-supplied references rather than authenticated vendor build records, so they do not establish that those devices share the same kernel binary. They do show why the release string alone must not be treated as a unique Moto G35 identifier or as proof of a source commit mapping. References: [Lenovo Idea Tab TB336FU device listing](https://specdeviceinfo.com/devices/lenovo/tb336fu-126891/) and [public vivo Y03t kernel report](https://github.com/zenyxx-xd/RootMyVivo/issues/22).
+
+GitHub commit search for the candidate suffix `g2d8ad9139b89` also returned no matching commit in the Motorola kernel repository. Both search outcomes are limited negative results, not proof that the relevant object or metadata is absent from all refs, history, or build artifacts.
+
 ## Comparison and interpretation
 
 | Evidence | Value | Interpretation |
