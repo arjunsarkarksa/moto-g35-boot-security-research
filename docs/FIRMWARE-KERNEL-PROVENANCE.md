@@ -84,3 +84,29 @@ Until such evidence is found, use this wording: **“Motorola-published Moto G35
 ## Safety and scope
 
 This is a source-provenance investigation only. It does not require flashing firmware, unlocking the bootloader, modifying partitions, or extracting private identifiers. Do not publish IMEI, serial number, account data, or other unique device identifiers while collecting additional evidence.
+
+## Running kernel configuration observed on the lab handset
+
+The device exposed `/proc/config.gz`. ADB `pull` successfully copied the 41,068-byte compressed file to the Windows lab workstation, where it was decompressed locally and inspected. No device configuration was changed.
+
+Selected entries from the running configuration:
+
+- `CONFIG_IKCONFIG=y`
+- `CONFIG_IKCONFIG_PROC=y`
+- `CONFIG_SECURITY_SELINUX=y`
+- `CONFIG_DEFAULT_SECURITY_SELINUX=y`
+- `CONFIG_SECURITY_SELINUX_DISABLE` is not set
+- `CONFIG_CC_VERSION_TEXT` identifies Android Clang 14.0.7 (Android LLVM build 8508608, base revision r450784e)
+- `CONFIG_LOCALVERSION=""`
+- `CONFIG_LOCALVERSION_AUTO=y`
+- `CONFIG_MODULES=y`
+- `CONFIG_ARCH_SPRD` is not set
+- No `CONFIG_SPRD_APB_PROT` or `CONFIG_SPRD_DEBUG` entry appeared in the extracted configuration.
+
+### Interpretation and limits
+
+The running configuration is direct evidence of the options recorded in the handset's exposed kernel config. In particular, the two APB/debug symbols examined in the Motorola source/build-recipe investigation do not appear as enabled options in this configuration. This is consistent with those named Kconfig options not being enabled for this running kernel.
+
+This does **not** prove that no APB protection exists in hardware, firmware, bootloader, another driver, or a differently named kernel component. The absent `CONFIG_ARCH_SPRD` symbol also cautions against assuming that source-tree Kconfig names map one-to-one to the running kernel's configuration. The source tree and exact build revision still require correlation.
+
+The extracted configuration file is retained locally for research. It contains technical build settings, not a unique device identifier. Public documentation records only the selected relevant entries above.
